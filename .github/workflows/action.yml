@@ -98,7 +98,7 @@ jobs:
         aws-region: us-east-1
 
     - name: Deploy static site to S3 bucket
-      run: aws s3 sync public s3://${{ needs.setDeployEnv.outputs.web_s3_bucket_name }} --delete
+      run: aws s3 sync build s3://${{ needs.setDeployEnv.outputs.web_s3_bucket_name }} --delete
     - name: Create Cloudfront Invalidation
       run: aws cloudfront create-invalidation --distribution-id ${{ needs.setDeployEnv.outputs.cloudfront_distribution_id }} --paths "/*"
     
