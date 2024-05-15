@@ -51,7 +51,7 @@ jobs:
           parameters=$(aws ssm get-parameters-by-path --path "/${{ vars.PROJECT }}/${{ steps.step1.outputs.DEPLOYMENT_ENVIRONMENT }}/" --recursive --with-decryption --query "Parameters[].[Name,Value]" --output text)
           echo "Setting outputs and printing variables:"
           while IFS=$'\t' read -r name value; do
-            name=$(echo $name | sed 's|/${{ steps.step1.outputs.DEPLOYMENT_ENVIRONMENT }}/||') # Strip the initial part of the parameter name
+            name=$(echo $name | sed 's|/${{ vars.PROJECT }}/${{ steps.step1.outputs.DEPLOYMENT_ENVIRONMENT }}/||') # Strip the initial part of the parameter name
             name=$(echo $name | sed 's|[^a-zA-Z0-9_]|_|g') # Ensure the name is a valid environment variable
             # Print the variable and its value
             echo "Output set: $name=$value"
